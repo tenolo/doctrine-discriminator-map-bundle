@@ -1,0 +1,10 @@
+parameters:
+    tenolo.discriminator.map.class: Tenolo\DoctrineDiscriminatorMapBundle\EventListener\DiscriminatorMapListener
+
+services:
+
+    tenolo.discriminator.map.extender:
+        class: %tenolo.discriminator.map.class%
+        arguments: [ "%tenolo_doctrine_discriminator_map.discriminator_map%" ]
+        tags:
+            - { name: doctrine.event_listener, event: loadClassMetadata }

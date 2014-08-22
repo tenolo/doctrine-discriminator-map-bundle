@@ -12,7 +12,6 @@ use Symfony\Component\DependencyInjection\Loader;
  * @package Tenolo\DoctrineDiscriminatorMapBundle\DependencyInjection
  * @author Nikita Loges
  * @company tenolo GbR
- * @date ${DATE}
  */
 class TenoloDoctrineDiscriminatorMapExtension extends Extension
 {

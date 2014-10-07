@@ -20,6 +20,6 @@ class TenoloDoctrineDiscriminatorMapBundle extends Bundle
     public function boot()
     {
         // register doctrine annotation
-        AnnotationRegistry::registerAutoloadNamespace('Tenolo\DoctrineTablePrefixBundle\Doctrine\Annotations', __DIR__.'/../..');
+        AnnotationRegistry::registerAutoloadNamespace('Tenolo\DoctrineTablePrefixBundle\Doctrine\Annotations', __DIR__ . '/../..');
     }
 }

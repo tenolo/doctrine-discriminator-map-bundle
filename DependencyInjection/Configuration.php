@@ -24,14 +24,14 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->arrayNode('discriminator_map')->isRequired()->requiresAtLeastOneElement()->useAttributeAsKey('name')->prototype('array')
-                    ->children()
-                        ->scalarNode('entity')->end()
-                        ->variableNode('discriminator')->defaultValue("discriminator")->end()
-                        ->variableNode('inheritance_type')->defaultValue(3)->end()
-                        ->arrayNode('children')->useAttributeAsKey('name')->prototype('scalar')->end()
-                    ->end()
-                ->end()
+            ->arrayNode('discriminator_map')->isRequired()->requiresAtLeastOneElement()->useAttributeAsKey('name')->prototype('array')
+            ->children()
+            ->scalarNode('entity')->end()
+            ->variableNode('discriminator')->defaultValue("discriminator")->end()
+            ->variableNode('inheritance_type')->defaultValue(3)->end()
+            ->arrayNode('children')->useAttributeAsKey('name')->prototype('scalar')->end()
+            ->end()
+            ->end()
             ->end();
 
         return $treeBuilder;

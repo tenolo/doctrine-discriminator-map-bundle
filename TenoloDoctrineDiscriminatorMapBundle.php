@@ -14,12 +14,4 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class TenoloDoctrineDiscriminatorMapBundle extends Bundle
 {
 
-    /**
-     * @{@inheritdoc}
-     */
-    public function boot()
-    {
-        // register doctrine annotation
-        AnnotationRegistry::registerAutoloadNamespace('Tenolo\DoctrineTablePrefixBundle\Doctrine\Annotations', __DIR__ . '/../..');
-    }
 }

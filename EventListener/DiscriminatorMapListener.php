@@ -5,7 +5,7 @@ namespace Tenolo\DoctrineDiscriminatorMapBundle\EventListener;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
-use Tenolo\CoreBundle\Util\StringUtil;
+use Tenolo\CoreBundle\Util\String;
 
 /**
  * Class DiscriminatorMapListener
@@ -63,7 +63,7 @@ class DiscriminatorMapListener
                 } // generate map by myself
                 else {
                     $discriminatorMap = array(
-                        StringUtil::toLowerCase($class->getShortName()) => $class->getName()
+                        String::toLowerCase($class->getShortName()) => $class->getName()
                     );
                 }
 

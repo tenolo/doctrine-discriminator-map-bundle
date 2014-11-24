@@ -2,7 +2,6 @@
 
 namespace Tenolo\DoctrineDiscriminatorMapBundle;
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**

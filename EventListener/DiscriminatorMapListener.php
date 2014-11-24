@@ -3,8 +3,8 @@
 namespace Tenolo\DoctrineDiscriminatorMapBundle\EventListener;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Tenolo\CoreBundle\Util\String;
 
 /**

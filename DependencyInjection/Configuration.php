@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->arrayNode('discriminator_map')->isRequired()->requiresAtLeastOneElement()->useAttributeAsKey('name')->prototype('array')
+            ->arrayNode('discriminator_map')->requiresAtLeastOneElement()->useAttributeAsKey('name')->prototype('array')
             ->children()
             ->scalarNode('entity')->end()
             ->variableNode('discriminator')->defaultValue("discriminator")->end()

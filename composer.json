@@ -1,5 +1,5 @@
 {
-    "name": "tenolo/doctrne-discriminator-map-bundle",
+    "name": "tenolo/doctrine-discriminator-map-bundle",
     "description": "",
     "keywords": ["doctrine", "discriminator", "map", "tenolo"],
     "type": "symfony-bundle",

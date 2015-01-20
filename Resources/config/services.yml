@@ -1,5 +1,5 @@
 parameters:
-    tenolo.discriminator.map.class: Tenolo\DoctrineDiscriminatorMapBundle\EventListener\DiscriminatorMapListener
+    tenolo.discriminator.map.class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener\DiscriminatorMapListener
 
 services:
 

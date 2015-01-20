@@ -1,12 +1,12 @@
 <?php
 
-namespace Tenolo\DoctrineDiscriminatorMapBundle;
+namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Class TenoloDoctrineDiscriminatorMapBundle
- * @package Tenolo\DoctrineDiscriminatorMapBundle
+ * @package Tenolo\Bundle\DoctrineDiscriminatorMapBundle
  * @author Nikita Loges
  * @company tenolo GbR
  */

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tenolo\DoctrineDiscriminatorMapBundle\DependencyInjection;
+namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * Class TenoloDoctrineDiscriminatorMapExtension
- * @package Tenolo\DoctrineDiscriminatorMapBundle\DependencyInjection
+ * @package Tenolo\Bundle\DoctrineDiscriminatorMapBundle\DependencyInjection
  * @author Nikita Loges
  * @company tenolo GbR
  */

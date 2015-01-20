@@ -1,15 +1,15 @@
 <?php
 
-namespace Tenolo\DoctrineDiscriminatorMapBundle\EventListener;
+namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Tenolo\CoreBundle\Util\String;
+use Tenolo\Bundle\CoreBundle\Util\String;
 
 /**
  * Class DiscriminatorMapListener
- * @package Tenolo\DoctrineDiscriminatorMapBundle\EventListener
+ * @package Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener
  * @author Nikita Loges
  * @company tenolo GbR
  * @date 05.06.14

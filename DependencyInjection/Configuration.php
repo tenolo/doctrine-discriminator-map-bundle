@@ -1,13 +1,13 @@
 <?php
 
-namespace Tenolo\DoctrineDiscriminatorMapBundle\DependencyInjection;
+namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * Class Configuration
- * @package Tenolo\DoctrineDiscriminatorMapBundle\DependencyInjection
+ * @package Tenolo\Bundle\DoctrineDiscriminatorMapBundle\DependencyInjection
  * @author Nikita Loges
  * @company tenolo GbR
  */

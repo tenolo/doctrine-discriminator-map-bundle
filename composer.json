@@ -28,8 +28,8 @@
     },
     "autoload": {
         "psr-0": {
-            "Tenolo\\DoctrineDiscriminatorMapBundle": ""
+            "Tenolo\\Bundle\\DoctrineDiscriminatorMapBundle": ""
         }
     },
-    "target-dir": "Tenolo/DoctrineDiscriminatorMapBundle"
+    "target-dir": "Tenolo/Bundle/DoctrineDiscriminatorMapBundle"
 }

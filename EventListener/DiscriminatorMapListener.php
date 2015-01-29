@@ -68,7 +68,7 @@ class DiscriminatorMapListener
                 }
 
                 // merge map
-                $discriminatorMap = array_merge($discriminatorMap, $config['children']);
+                $discriminatorMap = array_replace($discriminatorMap, $config['children']);
 
                 // set inheritance type if not set
                 if ($metadata->isInheritanceTypeNone()) {

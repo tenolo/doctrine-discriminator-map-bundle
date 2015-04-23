@@ -5,6 +5,7 @@ namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Tenolo\Bundle\CoreBundle\Util\Crypt;
 use Tenolo\Bundle\CoreBundle\Util\String;
 
 /**
@@ -53,7 +54,7 @@ class DiscriminatorMapListener
             $class = new \ReflectionClass($metadata->getName());
         }
 
-        foreach ($this->discriminatorMap as $table => $config) {
+        foreach ($this->discriminatorMap as $config) {
             if ($class->getName() == $config['entity']) {
                 $reader = new AnnotationReader();
 
@@ -67,8 +68,13 @@ class DiscriminatorMapListener
                     );
                 }
 
+                $children = array();
+                foreach ($config['children'] as $value) {
+                    $children[String::getFirstNChars(Crypt::sha1($value), 8)] = $value;
+                }
+
                 // merge map
-                $discriminatorMap = array_replace($discriminatorMap, $config['children']);
+                $discriminatorMap = array_replace($discriminatorMap, $children);
 
                 // set inheritance type if not set
                 if ($metadata->isInheritanceTypeNone()) {

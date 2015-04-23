@@ -24,12 +24,12 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->arrayNode('discriminator_map')->requiresAtLeastOneElement()->useAttributeAsKey('name')->prototype('array')
+            ->arrayNode('discriminator_map')->requiresAtLeastOneElement()->prototype('array')
             ->children()
             ->scalarNode('entity')->end()
             ->variableNode('discriminator')->defaultValue("discriminator")->end()
-            ->variableNode('inheritance_type')->defaultValue(3)->end()
-            ->arrayNode('children')->useAttributeAsKey('name')->prototype('scalar')->end()
+            ->variableNode('inheritance_type')->defaultValue(2)->end()
+            ->arrayNode('children')->prototype('scalar')->end()
             ->end()
             ->end()
             ->end();

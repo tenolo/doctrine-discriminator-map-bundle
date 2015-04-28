@@ -7,6 +7,7 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Tenolo\Bundle\CoreBundle\Util\Crypt;
 use Tenolo\Bundle\CoreBundle\Util\String;
+use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMap;
 
 /**
  * Class DiscriminatorMapListener
@@ -70,7 +71,7 @@ class DiscriminatorMapListener
 
                 $children = array();
                 foreach ($config['children'] as $value) {
-                    $children[String::getFirstNChars(Crypt::sha1($value), 8)] = $value;
+                    $children[DiscriminatorMap::hash($value)] = $value;
                 }
 
                 // merge map

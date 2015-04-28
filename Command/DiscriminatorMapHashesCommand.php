@@ -1,0 +1,44 @@
+<?php
+
+namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Command;
+
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\Table;
+use Tenolo\Bundle\CoreBundle\Command\BaseCommand;
+use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMap;
+
+/**
+ * Class DiscriminatorMapHashesCommand
+ * @package Tenolo\Bundle\CoreBundle\Command
+ * @author Nikita Loges
+ * @company tenolo GbR
+ * @date 28.04.2015
+ */
+class DiscriminatorMapHashesCommand extends BaseCommand
+{
+
+    protected $commandName = 'tenolo:discriminator-map:hashes';
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        /** @var ClassMetadata[] $metadatas */
+        $metadatas = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();
+
+        $rows = array();
+
+        foreach ($metadatas as $metadata) {
+            $rows[] = array($metadata->getName(), DiscriminatorMap::hash($metadata->getName()));
+        }
+
+        $table = new Table($output);
+        $table->setHeaders(array('Klasse', 'Hash'));
+        $table->setRows($rows);
+        $table->render();
+    }
+
+}

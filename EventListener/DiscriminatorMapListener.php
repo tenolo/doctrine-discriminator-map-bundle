@@ -5,7 +5,6 @@ namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Tenolo\Bundle\CoreBundle\Util\Crypt;
 use Tenolo\Bundle\CoreBundle\Util\String;
 use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMap;
 

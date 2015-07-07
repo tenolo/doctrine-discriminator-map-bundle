@@ -5,7 +5,6 @@ namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Tenolo\Bundle\CoreBundle\Util\String;
 use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMap;
 
 /**
@@ -63,14 +62,14 @@ class DiscriminatorMapListener
                     $discriminatorMap = $discriminatorMapAnnotation->value;
                 } // generate map by myself
                 else {
-                    $discriminatorMap = array(
-                        String::toLowerCase($class->getShortName()) => $class->getName()
-                    );
+                    $hash = DiscriminatorMap::hash($class->getName());
+                    $discriminatorMap = array($hash => $class->getName());
                 }
 
                 $children = array();
                 foreach ($config['children'] as $value) {
-                    $children[DiscriminatorMap::hash($value)] = $value;
+                    $hash = DiscriminatorMap::hash($value);
+                    $children[$hash] = $value;
                 }
 
                 // merge map

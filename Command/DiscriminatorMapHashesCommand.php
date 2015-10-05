@@ -19,8 +19,6 @@ use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMap;
 class DiscriminatorMapHashesCommand extends BaseCommand
 {
 
-    protected $commandName = 'tenolo:discriminator-map:hashes';
-
     /**
      * {@inheritdoc}
      */

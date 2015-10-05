@@ -1,6 +1,9 @@
 parameters:
     tenolo.discriminator.map.class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener\DiscriminatorMapListener
 
+    # commands
+    tenolo_discriminator_map.command.discriminator_map_hashes.class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Command\DiscriminatorMapHashesCommand
+
 services:
 
     tenolo.discriminator.map.extender:
@@ -8,3 +11,10 @@ services:
         arguments: [ "%tenolo_doctrine_discriminator_map.discriminator_map%" ]
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
+
+    # commands
+    tenolo_discriminator_map.command.discriminator_map_hashes:
+        class: %tenolo_discriminator_map.command.discriminator_map_hashes.class%
+        arguments: ["tenolo:discriminator-map:hashes"]
+        tags:
+            - { name: console.command }

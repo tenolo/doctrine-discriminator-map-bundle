@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
 use Tenolo\Bundle\CoreBundle\Command\BaseCommand;
-use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMap;
+use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMapUtil;
 
 /**
  * Class DiscriminatorMapHashesCommand
@@ -30,7 +30,7 @@ class DiscriminatorMapHashesCommand extends BaseCommand
         $rows = array();
 
         foreach ($metadatas as $metadata) {
-            $rows[] = array($metadata->getName(), DiscriminatorMap::hash($metadata->getName()));
+            $rows[] = array($metadata->getName(), DiscriminatorMapUtil::hash($metadata->getName()));
         }
 
         $table = new Table($output);

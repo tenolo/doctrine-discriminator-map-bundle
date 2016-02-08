@@ -38,10 +38,5 @@
         "psr-4": {
             "Tenolo\\Bundle\\DoctrineDiscriminatorMapBundle\\": ""
         }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-develop": "1.0-dev"
-        }
     }
 }

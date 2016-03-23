@@ -1,7 +1,12 @@
 {
     "name": "tenolo/doctrine-discriminator-map-bundle",
     "description": "",
-    "keywords": ["doctrine", "discriminator", "map", "tenolo"],
+    "keywords": [
+        "doctrine",
+        "discriminator",
+        "map",
+        "tenolo"
+    ],
     "type": "symfony-bundle",
     "license": "MIT",
     "homepage": "http://tenolo.de",
@@ -42,7 +47,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Tenolo\\Bundle\\DoctrineDiscriminatorMapBundle\\": ""
+            "Tenolo\\Bundle\\DoctrineDiscriminatorMapBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tenolo\\Bundle\\DoctrineDiscriminatorMapBundle\\Tests\\": "tests/"
         }
     },
     "extra": {

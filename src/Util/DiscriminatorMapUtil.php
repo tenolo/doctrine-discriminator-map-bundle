@@ -2,9 +2,9 @@
 
 namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util;
 
-use Tenolo\Bundle\CoreBundle\Util\BaseUtil;
-use Tenolo\Bundle\CoreBundle\Util\CryptUtil;
-use Tenolo\Bundle\CoreBundle\Util\StringUtil;
+use Tenolo\Utilities\Utils\BaseUtil;
+use Tenolo\Utilities\Utils\CryptUtil;
+use Tenolo\Utilities\Utils\StringUtil;
 
 /**
  * Class DiscriminatorMap

@@ -3,24 +3,24 @@
 namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Command;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
 use Tenolo\Bundle\CoreBundle\Command\BaseCommand;
 use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMapUtil;
 
 /**
  * Class DiscriminatorMapHashesCommand
+ *
  * @package Tenolo\Bundle\CoreBundle\Command
- * @author Nikita Loges
+ * @author  Nikita Loges
  * @company tenolo GbR
- * @date 28.04.2015
  */
 class DiscriminatorMapHashesCommand extends BaseCommand
 {
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

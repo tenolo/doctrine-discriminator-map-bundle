@@ -9,15 +9,16 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * Class TenoloDoctrineDiscriminatorMapExtension
+ *
  * @package Tenolo\Bundle\DoctrineDiscriminatorMapBundle\DependencyInjection
- * @author Nikita Loges
+ * @author  Nikita Loges
  * @company tenolo GbR
  */
 class TenoloDoctrineDiscriminatorMapExtension extends Extension
 {
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function load(array $configs, ContainerBuilder $container)
     {

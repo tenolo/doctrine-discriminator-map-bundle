@@ -1,7 +1,12 @@
 {
     "name": "tenolo/doctrine-discriminator-map-bundle",
     "description": "",
-    "keywords": ["doctrine", "discriminator", "map", "tenolo"],
+    "keywords": [
+        "doctrine",
+        "discriminator",
+        "map",
+        "tenolo"
+    ],
     "type": "symfony-bundle",
     "license": "MIT",
     "homepage": "http://tenolo.de",
@@ -34,14 +39,27 @@
         "symfony/assetic-bundle": "~2.6",
         "phpunit/phpunit": "~4.7"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.tenolo.com/repo/private/"
+        }
+    ],
     "autoload": {
         "psr-4": {
-            "Tenolo\\Bundle\\DoctrineDiscriminatorMapBundle\\": ""
+            "Tenolo\\Bundle\\DoctrineDiscriminatorMapBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tenolo\\Bundle\\DoctrineDiscriminatorMapBundle\\Tests\\": "tests/"
         }
     },
     "extra": {
         "branch-alias": {
-            "dev-develop": "1.0-dev"
+            "dev-release/1.0": "1.0-dev"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

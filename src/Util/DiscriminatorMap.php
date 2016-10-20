@@ -2,9 +2,9 @@
 
 namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util;
 
-use Tenolo\Bundle\CoreBundle\Util\Base;
-use Tenolo\Bundle\CoreBundle\Util\Crypt;
-use Tenolo\Bundle\CoreBundle\Util\String;
+use Tenolo\Utilities\Utils\BaseUtil;
+use Tenolo\Utilities\Utils\CryptUtil;
+use Tenolo\Utilities\Utils\StringUtil;
 
 /**
  * Class DiscriminatorMap
@@ -13,7 +13,7 @@ use Tenolo\Bundle\CoreBundle\Util\String;
  * @company tenolo GbR
  * @date 28.04.2015
  */
-class DiscriminatorMap extends Base
+class DiscriminatorMap extends BaseUtil
 {
 
     /**
@@ -22,6 +22,6 @@ class DiscriminatorMap extends Base
      */
     public static function hash($value)
     {
-        return String::getFirstNChars(Crypt::sha1($value), 8);
+        return StringUtil::getFirstNChars(CryptUtil::sha1($value), 8);
     }
 }

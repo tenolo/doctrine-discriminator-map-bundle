@@ -1,10 +1,12 @@
 {
     "name": "tenolo/doctrine-discriminator-map-bundle",
-    "description": "",
+    "description": "Gives an easy way to use doctrine'S discriminator map.",
     "keywords": [
         "doctrine",
         "discriminator",
         "map",
+        "symfony",
+        "bundle",
         "tenolo"
     ],
     "type": "symfony-bundle",
@@ -22,7 +24,7 @@
         }
     ],
     "require": {
-        "php": ">=5.4",
+        "php": "~5.4|~7.0",
 
         "symfony/http-kernel": "~2.7",
         "symfony/console": "~2.7",
@@ -36,8 +38,7 @@
         "tenolo/core-bundle": "~1.0"
     },
     "require-dev": {
-        "symfony/assetic-bundle": "~2.6",
-        "phpunit/phpunit": "~4.7"
+        "symfony/phpunit-bridge": "~2.8|~3.0"
     },
     "repositories": [
         {

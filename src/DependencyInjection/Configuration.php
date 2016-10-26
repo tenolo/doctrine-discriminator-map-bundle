@@ -7,15 +7,16 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * Class Configuration
+ *
  * @package Tenolo\Bundle\DoctrineDiscriminatorMapBundle\DependencyInjection
- * @author Nikita Loges
+ * @author  Nikita Loges
  * @company tenolo GbR
  */
 class Configuration implements ConfigurationInterface
 {
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getConfigTreeBuilder()
     {

@@ -5,26 +5,23 @@ namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMapUtil;
 
 /**
  * Class DiscriminatorMapListener
+ *
  * @package Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener
- * @author Nikita Loges
+ * @author  Nikita Loges
  * @company tenolo GbR
- * @date 05.06.14
  */
 class DiscriminatorMapListener
 {
 
-    /**
-     * @var array
-     */
-    private $discriminatorMap;
+    /** @var array */
+    protected $discriminatorMap;
 
     /**
-     * Constructor
-     *
      * @param array $discriminatorMap
      */
     public function __construct($discriminatorMap)
@@ -33,8 +30,6 @@ class DiscriminatorMapListener
     }
 
     /**
-     * Sets the discriminator map according to the config
-     *
      * @param LoadClassMetadataEventArgs $eventArgs
      */
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
@@ -58,7 +53,7 @@ class DiscriminatorMapListener
                 $reader = new AnnotationReader();
 
                 // try to get DiscriminatorMap
-                if ($discriminatorMapAnnotation = $reader->getClassAnnotation($class, 'Doctrine\ORM\Mapping\DiscriminatorMap')) {
+                if ($discriminatorMapAnnotation = $reader->getClassAnnotation($class, DiscriminatorMap::class)) {
                     $discriminatorMap = $discriminatorMapAnnotation->value;
                 } // generate map by myself
                 else {
@@ -80,8 +75,8 @@ class DiscriminatorMapListener
                     // set inheritance type to single table
                     $metadata->setInheritanceType($config['inheritance_type']);
                     $metadata->setDiscriminatorColumn(array(
-                        'name' => $config['discriminator'],
-                        'type' => 'string',
+                        'name'   => $config['discriminator'],
+                        'type'   => 'string',
                         'length' => '255'
                     ));
                 }

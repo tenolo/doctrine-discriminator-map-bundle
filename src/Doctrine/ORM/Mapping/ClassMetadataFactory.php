@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Mapping\MappingException;
 use Doctrine\ORM\ORMException;
 use ReflectionException;
-use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMap;
+use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMapUtil;
 
 /**
  * Copied from the original \Doctrine\ORM\Mapping\ClassMetadataFactory class to override functions.
@@ -266,7 +266,7 @@ class ClassMetadataFactory extends AbstractClassMetadataFactory
      */
     protected function getShortName($className)
     {
-        return DiscriminatorMap::hash($className);
+        return DiscriminatorMapUtil::hash($className);
     }
 
     /**

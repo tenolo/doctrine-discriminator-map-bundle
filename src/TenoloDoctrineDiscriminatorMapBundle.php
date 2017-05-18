@@ -2,11 +2,7 @@
 
 namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle;
 
-use Mmoreram\SymfonyBundleDependencies\DependentBundleInterface;
-use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Tenolo\Bundle\CoreBundle\TenoloCoreBundle;
 
 /**
  * Class TenoloDoctrineDiscriminatorMapBundle
@@ -15,17 +11,6 @@ use Tenolo\Bundle\CoreBundle\TenoloCoreBundle;
  * @author  Nikita Loges
  * @company tenolo GbR
  */
-class TenoloDoctrineDiscriminatorMapBundle extends Bundle implements DependentBundleInterface
+class TenoloDoctrineDiscriminatorMapBundle extends Bundle
 {
-
-    /**
-     * @inheritdoc
-     */
-    public static function getBundleDependencies(KernelInterface $kernel)
-    {
-        return [
-            FrameworkBundle::class,
-            TenoloCoreBundle::class,
-        ];
-    }
 }

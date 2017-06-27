@@ -3,40 +3,52 @@
 namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Command;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
-use Tenolo\Bundle\CoreBundle\Command\BaseCommand;
-use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMap;
+use Tenolo\Bundle\CoreBundle\Component\DependencyInjection\Container\ContainerShortcuts;
 
 /**
  * Class DiscriminatorMapHashesCommand
+ *
  * @package Tenolo\Bundle\CoreBundle\Command
- * @author Nikita Loges
+ * @author  Nikita Loges
  * @company tenolo GbR
- * @date 28.04.2015
  */
-class DiscriminatorMapHashesCommand extends BaseCommand
+class DiscriminatorMapHashesCommand extends ContainerAwareCommand
 {
+
+    use ContainerShortcuts;
+
+    /**
+     * @inheritDoc
+     */
+    protected function configure()
+    {
+        $this->setName('tenolo:discriminator-map:hashes');
+    }
 
     /**
      * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $strategy = $this->getContainer()->get('discriminator_naming_strategy');
+
         /** @var ClassMetadata[] $metadatas */
         $metadatas = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();
 
-        $rows = array();
+        $rows = [];
 
         foreach ($metadatas as $metadata) {
-            $rows[] = array($metadata->getName(), DiscriminatorMap::hash($metadata->getName()));
+            $rows[] = [$metadata->getName(), $strategy->getName($metadata->getName())];
         }
 
-        $table = new Table($output);
-        $table->setHeaders(array('Klasse', 'Hash'));
-        $table->setRows($rows);
-        $table->render();
-    }
+        $table = $this->getHelper('table');
 
+        $table->setHeaders(['Klasse', 'Hash']);
+        $table->setRows($rows);
+
+        $table->render($output);
+    }
 }

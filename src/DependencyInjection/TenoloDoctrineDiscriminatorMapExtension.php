@@ -6,7 +6,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Doctrine\ORM\Mapping\ClassMetadataFactory;
 
 /**
@@ -16,18 +16,16 @@ use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Doctrine\ORM\Mapping\ClassMetad
  * @author  Nikita Loges
  * @company tenolo GbR
  */
-class TenoloDoctrineDiscriminatorMapExtension extends Extension implements PrependExtensionInterface
+class TenoloDoctrineDiscriminatorMapExtension extends ConfigurableExtension implements PrependExtensionInterface
 {
 
     /**
      * {@inheritDoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function loadInternal(array $config, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
-
         $container->setParameter("tenolo_doctrine_discriminator_map.discriminator_map", $config['discriminator_map']);
+        $container->setParameter("tenolo_doctrine_discriminator_map.naming_strategy", $config['naming_strategy']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
@@ -38,18 +36,18 @@ class TenoloDoctrineDiscriminatorMapExtension extends Extension implements Prepe
      */
     public function prepend(ContainerBuilder $container)
     {
-        $doctrine = [
+        $container->prependExtensionConfig('doctrine', $this->getDoctrineConfig());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDoctrineConfig()
+    {
+        return [
             'orm' => [
                 'class_metadata_factory_name' => ClassMetadataFactory::class,
             ]
         ];
-
-        foreach ($container->getExtensions() as $name => $extension) {
-            switch ($name) {
-                case 'doctrine':
-                    $container->prependExtensionConfig($name, $doctrine);
-                    break;
-            }
-        }
     }
 }

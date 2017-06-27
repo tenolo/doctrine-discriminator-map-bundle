@@ -1,20 +1,37 @@
 parameters:
-    tenolo.discriminator.map.class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener\DiscriminatorMapListener
+    tenolo.discriminator.map.class:
 
     # commands
-    tenolo_discriminator_map.command.discriminator_map_hashes.class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Command\DiscriminatorMapHashesCommand
+    tenolo_discriminator_map.command.discriminator_map_hashes.class:
 
 services:
 
     tenolo.discriminator.map.extender:
-        class: %tenolo.discriminator.map.class%
-        arguments: [ "%tenolo_doctrine_discriminator_map.discriminator_map%" ]
+        class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener\DiscriminatorMapListener
+        arguments: ['@discriminator_naming_strategy', "%tenolo_doctrine_discriminator_map.discriminator_map%"]
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
 
+    # naming strategy
+    tenolo_discriminator_map.naming_strategy.delegator:
+        class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Discriminator\Naming\StrategyDelegator
+        arguments: [~]
+
+    discriminator_naming_strategy:
+        alias: tenolo_discriminator_map.naming_strategy.delegator
+
+    tenolo_discriminator_map.naming_strategy.hash:
+        class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Discriminator\Naming\HashStrategy
+
+    tenolo_discriminator_map.naming_strategy.namespace:
+        class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Discriminator\Naming\NamespaceStrategy
+
+    tenolo_discriminator_map.naming_strategy.short_name:
+        class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Discriminator\Naming\ShortNameStrategy
+
     # commands
     tenolo_discriminator_map.command.discriminator_map_hashes:
-        class: %tenolo_discriminator_map.command.discriminator_map_hashes.class%
+        class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Command\DiscriminatorMapHashesCommand
         arguments: ["tenolo:discriminator-map:hashes"]
         tags:
             - { name: console.command }

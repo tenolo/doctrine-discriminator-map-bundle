@@ -39,9 +39,6 @@
 
         "jbzoo/utils": "~1.7"
     },
-    "require-dev": {
-        "symfony/phpunit-bridge": "~2.8|~3.0"
-    },
     "repositories": [
         {
             "type": "composer",

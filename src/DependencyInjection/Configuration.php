@@ -7,8 +7,9 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * Class Configuration
+ *
  * @package Tenolo\Bundle\DoctrineDiscriminatorMapBundle\DependencyInjection
- * @author Nikita Loges
+ * @author  Nikita Loges
  * @company tenolo GbR
  */
 class Configuration implements ConfigurationInterface
@@ -24,15 +25,15 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('naming_strategy')->defaultValue("hash")->end()
-                ->arrayNode('discriminator_map')->requiresAtLeastOneElement()->prototype('array')
-                    ->children()
-                        ->scalarNode('entity')->end()
-                        ->variableNode('discriminator')->defaultValue("discriminator")->end()
-                        ->variableNode('inheritance_type')->defaultValue(2)->end()
-                        ->arrayNode('children')->prototype('scalar')->end()
-                    ->end()
-                ->end()
+            ->scalarNode('naming_strategy')->defaultValue("hash")->end()
+            ->arrayNode('discriminator_map')->requiresAtLeastOneElement()->prototype('array')
+            ->children()
+            ->scalarNode('entity')->end()
+            ->variableNode('discriminator')->defaultValue("discriminator")->end()
+            ->variableNode('inheritance_type')->defaultValue(2)->end()
+            ->arrayNode('children')->prototype('scalar')->end()
+            ->end()
+            ->end()
             ->end();
 
         return $treeBuilder;

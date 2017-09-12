@@ -3,22 +3,39 @@
 namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Command;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Tenolo\Bundle\CoreBundle\Component\DependencyInjection\Container\ContainerShortcuts;
+use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Discriminator\Naming\StrategyInterface;
 
 /**
  * Class DiscriminatorMapHashesCommand
  *
- * @package Tenolo\Bundle\CoreBundle\Command
+ * @package Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Command
  * @author  Nikita Loges
  * @company tenolo GbR
  */
-class DiscriminatorMapHashesCommand extends ContainerAwareCommand
+class DiscriminatorMapHashesCommand extends Command
 {
 
-    use ContainerShortcuts;
+    /** @var StrategyInterface */
+    protected $strategy;
+
+    /** @var RegistryInterface */
+    protected $registry;
+
+    /**
+     * @param StrategyInterface $strategy
+     * @param RegistryInterface $registry
+     */
+    public function __construct(StrategyInterface $strategy, RegistryInterface $registry)
+    {
+        parent::__construct();
+
+        $this->strategy = $strategy;
+        $this->registry = $registry;
+    }
 
     /**
      * @inheritDoc
@@ -33,15 +50,18 @@ class DiscriminatorMapHashesCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $strategy = $this->getContainer()->get('discriminator_naming_strategy');
+        $strategy = $this->strategy;
 
-        /** @var ClassMetadata[] $metadatas */
-        $metadatas = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();
+        foreach ($this->registry->getManagers() as $em) {
 
-        $rows = [];
+            /** @var ClassMetadata[] $metadatas */
+            $metadatas = $em->getMetadataFactory()->getAllMetadata();
 
-        foreach ($metadatas as $metadata) {
-            $rows[] = [$metadata->getName(), $strategy->getName($metadata->getName())];
+            $rows = [];
+
+            foreach ($metadatas as $metadata) {
+                $rows[] = [$metadata->getName(), $strategy->getName($metadata->getName())];
+            }
         }
 
         $table = $this->getHelper('table');

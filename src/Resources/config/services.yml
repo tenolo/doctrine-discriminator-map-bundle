@@ -32,6 +32,8 @@ services:
     # commands
     tenolo_discriminator_map.command.discriminator_map_hashes:
         class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Command\DiscriminatorMapHashesCommand
-        arguments: ["tenolo:discriminator-map:hashes"]
+        arguments:
+            - '@discriminator_naming_strategy'
+            - '@doctrine'
         tags:
             - { name: console.command }

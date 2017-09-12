@@ -25,8 +25,9 @@ use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Discriminator\Naming\StrategyIn
  *
  * Class ClassMetadataFactory
  *
- * @package Tenolo\Bundle\CoreBundle\Doctrine\ORM\Mapping
- * @author  Nikita Loges, tenolo GbR
+ * @package Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Doctrine\ORM\Mapping
+ * @author  Nikita Loges
+ * @company tenolo GbR
  */
 class ClassMetadataFactory extends AbstractClassMetadataFactory
 {

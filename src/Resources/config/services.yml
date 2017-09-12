@@ -1,9 +1,3 @@
-parameters:
-    tenolo.discriminator.map.class:
-
-    # commands
-    tenolo_discriminator_map.command.discriminator_map_hashes.class:
-
 services:
 
     tenolo.discriminator.map.extender:

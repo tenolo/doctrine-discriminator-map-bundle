@@ -7,7 +7,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Doctrine\ORM\Mapping\ClassMetadataFactory;
 
 /**
@@ -23,9 +22,10 @@ class TenoloDoctrineDiscriminatorMapExtension extends ConfigurableExtension impl
     /**
      * @inheritDoc
      */
-    public function loadInternal(array $configs, ContainerBuilder $container)
+    public function loadInternal(array $config, ContainerBuilder $container)
     {
-        $container->setParameter("tenolo_doctrine_discriminator_map.discriminator_map", $configs['discriminator_map']);
+        $container->setParameter("tenolo_doctrine_discriminator_map.discriminator_map", $config['discriminator_map']);
+        $container->setParameter("tenolo_doctrine_discriminator_map.naming_strategy", $config['naming_strategy']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
@@ -36,18 +36,18 @@ class TenoloDoctrineDiscriminatorMapExtension extends ConfigurableExtension impl
      */
     public function prepend(ContainerBuilder $container)
     {
-        $doctrine = [
+        $container->prependExtensionConfig('doctrine', $this->getDoctrineConfig());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDoctrineConfig()
+    {
+        return [
             'orm' => [
                 'class_metadata_factory_name' => ClassMetadataFactory::class,
             ]
         ];
-
-        foreach ($container->getExtensions() as $name => $extension) {
-            switch ($name) {
-                case 'doctrine':
-                    $container->prependExtensionConfig($name, $doctrine);
-                    break;
-            }
-        }
     }
 }

@@ -5,36 +5,36 @@ namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMap;
+use Doctrine\ORM\Mapping\DiscriminatorMap as AnnoDiscriminatorMap;
+use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Discriminator\Naming\StrategyInterface;
 
 /**
  * Class DiscriminatorMapListener
+ *
  * @package Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener
- * @author Nikita Loges
+ * @author  Nikita Loges
  * @company tenolo GbR
- * @date 05.06.14
  */
 class DiscriminatorMapListener
 {
 
-    /**
-     * @var array
-     */
-    private $discriminatorMap;
+    /** @var array */
+    protected $discriminatorMap;
+
+    /** @var StrategyInterface */
+    protected $discriminatorNaming;
 
     /**
-     * Constructor
-     *
-     * @param array $discriminatorMap
+     * @param StrategyInterface $strategy
+     * @param                   $discriminatorMap
      */
-    public function __construct($discriminatorMap)
+    public function __construct(StrategyInterface $strategy, $discriminatorMap)
     {
+        $this->discriminatorNaming = $strategy;
         $this->discriminatorMap = $discriminatorMap;
     }
 
     /**
-     * Sets the discriminator map according to the config
-     *
      * @param LoadClassMetadataEventArgs $eventArgs
      */
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
@@ -58,17 +58,17 @@ class DiscriminatorMapListener
                 $reader = new AnnotationReader();
 
                 // try to get DiscriminatorMap
-                if ($discriminatorMapAnnotation = $reader->getClassAnnotation($class, 'Doctrine\ORM\Mapping\DiscriminatorMap')) {
+                if ($discriminatorMapAnnotation = $reader->getClassAnnotation($class, AnnoDiscriminatorMap::class)) {
                     $discriminatorMap = $discriminatorMapAnnotation->value;
                 } // generate map by myself
                 else {
-                    $hash = DiscriminatorMap::hash($class->getName());
-                    $discriminatorMap = array($hash => $class->getName());
+                    $hash = $this->discriminatorNaming->getName($class->getName());
+                    $discriminatorMap = [$hash => $class->getName()];
                 }
 
-                $children = array();
+                $children = [];
                 foreach ($config['children'] as $value) {
-                    $hash = DiscriminatorMap::hash($value);
+                    $hash = $this->discriminatorNaming->getName($value);
                     $children[$hash] = $value;
                 }
 
@@ -79,11 +79,11 @@ class DiscriminatorMapListener
                 if ($metadata->isInheritanceTypeNone()) {
                     // set inheritance type to single table
                     $metadata->setInheritanceType($config['inheritance_type']);
-                    $metadata->setDiscriminatorColumn(array(
-                        'name' => $config['discriminator'],
-                        'type' => 'string',
+                    $metadata->setDiscriminatorColumn([
+                        'name'   => $config['discriminator'],
+                        'type'   => 'string',
                         'length' => '255'
-                    ));
+                    ]);
                 }
 
                 // set map to meta data

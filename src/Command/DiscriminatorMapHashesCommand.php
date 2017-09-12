@@ -3,40 +3,72 @@
 namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Command;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
-use Tenolo\Bundle\CoreBundle\Command\BaseCommand;
-use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMap;
+use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Discriminator\Naming\StrategyInterface;
 
 /**
  * Class DiscriminatorMapHashesCommand
- * @package Tenolo\Bundle\CoreBundle\Command
- * @author Nikita Loges
+ *
+ * @package Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Command
+ * @author  Nikita Loges
  * @company tenolo GbR
- * @date 28.04.2015
  */
-class DiscriminatorMapHashesCommand extends BaseCommand
+class DiscriminatorMapHashesCommand extends Command
 {
+
+    /** @var StrategyInterface */
+    protected $strategy;
+
+    /** @var RegistryInterface */
+    protected $registry;
+
+    /**
+     * @param StrategyInterface $strategy
+     * @param RegistryInterface $registry
+     */
+    public function __construct(StrategyInterface $strategy, RegistryInterface $registry)
+    {
+        parent::__construct();
+
+        $this->strategy = $strategy;
+        $this->registry = $registry;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function configure()
+    {
+        $this->setName('tenolo:discriminator-map:hashes');
+    }
 
     /**
      * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var ClassMetadata[] $metadatas */
-        $metadatas = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();
+        $strategy = $this->strategy;
 
-        $rows = array();
+        foreach ($this->registry->getManagers() as $em) {
 
-        foreach ($metadatas as $metadata) {
-            $rows[] = array($metadata->getName(), DiscriminatorMap::hash($metadata->getName()));
+            /** @var ClassMetadata[] $metadatas */
+            $metadatas = $em->getMetadataFactory()->getAllMetadata();
+
+            $rows = [];
+
+            foreach ($metadatas as $metadata) {
+                $rows[] = [$metadata->getName(), $strategy->getName($metadata->getName())];
+            }
         }
 
-        $table = new Table($output);
-        $table->setHeaders(array('Klasse', 'Hash'));
-        $table->setRows($rows);
-        $table->render();
-    }
+        $table = $this->getHelper('table');
 
+        $table->setHeaders(['Klasse', 'Hash']);
+        $table->setRows($rows);
+
+        $table->render($output);
+    }
 }

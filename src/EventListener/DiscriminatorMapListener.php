@@ -5,8 +5,8 @@ namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
-use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Util\DiscriminatorMapUtil;
+use Doctrine\ORM\Mapping\DiscriminatorMap as AnnoDiscriminatorMap;
+use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Discriminator\Naming\StrategyInterface;
 
 /**
  * Class DiscriminatorMapListener
@@ -21,11 +21,16 @@ class DiscriminatorMapListener
     /** @var array */
     protected $discriminatorMap;
 
+    /** @var StrategyInterface */
+    protected $discriminatorNaming;
+
     /**
-     * @param array $discriminatorMap
+     * @param StrategyInterface $strategy
+     * @param                   $discriminatorMap
      */
-    public function __construct($discriminatorMap)
+    public function __construct(StrategyInterface $strategy, $discriminatorMap)
     {
+        $this->discriminatorNaming = $strategy;
         $this->discriminatorMap = $discriminatorMap;
     }
 
@@ -53,17 +58,17 @@ class DiscriminatorMapListener
                 $reader = new AnnotationReader();
 
                 // try to get DiscriminatorMap
-                if ($discriminatorMapAnnotation = $reader->getClassAnnotation($class, DiscriminatorMap::class)) {
+                if ($discriminatorMapAnnotation = $reader->getClassAnnotation($class, AnnoDiscriminatorMap::class)) {
                     $discriminatorMap = $discriminatorMapAnnotation->value;
                 } // generate map by myself
                 else {
-                    $hash = DiscriminatorMapUtil::hash($class->getName());
-                    $discriminatorMap = array($hash => $class->getName());
+                    $hash = $this->discriminatorNaming->getName($class->getName());
+                    $discriminatorMap = [$hash => $class->getName()];
                 }
 
-                $children = array();
+                $children = [];
                 foreach ($config['children'] as $value) {
-                    $hash = DiscriminatorMapUtil::hash($value);
+                    $hash = $this->discriminatorNaming->getName($value);
                     $children[$hash] = $value;
                 }
 
@@ -74,11 +79,11 @@ class DiscriminatorMapListener
                 if ($metadata->isInheritanceTypeNone()) {
                     // set inheritance type to single table
                     $metadata->setInheritanceType($config['inheritance_type']);
-                    $metadata->setDiscriminatorColumn(array(
+                    $metadata->setDiscriminatorColumn([
                         'name'   => $config['discriminator'],
                         'type'   => 'string',
                         'length' => '255'
-                    ));
+                    ]);
                 }
 
                 // set map to meta data

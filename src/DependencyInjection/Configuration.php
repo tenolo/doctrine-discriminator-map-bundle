@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+            ->scalarNode('naming_strategy')->defaultValue("hash")->end()
             ->arrayNode('discriminator_map')->requiresAtLeastOneElement()->prototype('array')
             ->children()
             ->scalarNode('entity')->end()

@@ -1,20 +1,33 @@
-parameters:
-    tenolo_discriminator_map.extender.class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener\DiscriminatorMapListener
-
-    # commands
-    tenolo_discriminator_map.command.discriminator_map_hashes.class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Command\DiscriminatorMapHashesCommand
-
 services:
 
-    tenolo_discriminator_map.extender:
-        class: "%tenolo_discriminator_map.extender.class%"
-        arguments: ["%tenolo_doctrine_discriminator_map.discriminator_map%"]
+    tenolo.discriminator.map.extender:
+        class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\EventListener\DiscriminatorMapListener
+        arguments: ['@discriminator_naming_strategy', "%tenolo_doctrine_discriminator_map.discriminator_map%"]
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
 
+    # naming strategy
+    tenolo_discriminator_map.naming_strategy.delegator:
+        class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Discriminator\Naming\StrategyDelegator
+        arguments: [~]
+
+    discriminator_naming_strategy:
+        alias: tenolo_discriminator_map.naming_strategy.delegator
+
+    tenolo_discriminator_map.naming_strategy.hash:
+        class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Discriminator\Naming\HashStrategy
+
+    tenolo_discriminator_map.naming_strategy.namespace:
+        class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Discriminator\Naming\NamespaceStrategy
+
+    tenolo_discriminator_map.naming_strategy.short_name:
+        class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Discriminator\Naming\ShortNameStrategy
+
     # commands
     tenolo_discriminator_map.command.discriminator_map_hashes:
-        class: "%tenolo_discriminator_map.command.discriminator_map_hashes.class%"
-        arguments: ["tenolo:discriminator-map:hashes"]
+        class: Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Command\DiscriminatorMapHashesCommand
+        arguments:
+            - '@discriminator_naming_strategy'
+            - '@doctrine'
         tags:
             - { name: console.command }

@@ -51,7 +51,7 @@ class ClassMetadataFactory extends AbstractClassMetadataFactory
     protected $discriminatorNaming;
 
     /**
-     * {@inheritDoc}
+     * @inheritdoc
      */
     protected function loadMetadata($name)
     {
@@ -71,7 +71,7 @@ class ClassMetadataFactory extends AbstractClassMetadataFactory
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritdoc
      */
     protected function initialize()
     {
@@ -81,7 +81,7 @@ class ClassMetadataFactory extends AbstractClassMetadataFactory
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritdoc
      */
     protected function onNotFoundMetadata($className)
     {
@@ -97,7 +97,7 @@ class ClassMetadataFactory extends AbstractClassMetadataFactory
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritdoc
      */
     protected function doLoadMetadata($class, $parent, $rootEntityFound, array $nonSuperclassParents)
     {
@@ -269,7 +269,7 @@ class ClassMetadataFactory extends AbstractClassMetadataFactory
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritdoc
      */
     protected function newClassMetadataInstance($className)
     {
@@ -688,7 +688,7 @@ class ClassMetadataFactory extends AbstractClassMetadataFactory
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritdoc
      */
     protected function wakeupReflection(ClassMetadataInterface $class, ReflectionService $reflService)
     {
@@ -697,7 +697,7 @@ class ClassMetadataFactory extends AbstractClassMetadataFactory
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritdoc
      */
     protected function initializeReflection(ClassMetadataInterface $class, ReflectionService $reflService)
     {
@@ -706,7 +706,7 @@ class ClassMetadataFactory extends AbstractClassMetadataFactory
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritdoc
      */
     protected function getFqcnFromAlias($namespaceAlias, $simpleClassName)
     {
@@ -714,7 +714,7 @@ class ClassMetadataFactory extends AbstractClassMetadataFactory
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritdoc
      */
     protected function getDriver()
     {
@@ -722,7 +722,7 @@ class ClassMetadataFactory extends AbstractClassMetadataFactory
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritdoc
      */
     protected function isEntity(ClassMetadataInterface $class)
     {

@@ -7,6 +7,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\Discriminator\Naming\StrategyInterface;
 
 /**
@@ -50,6 +51,7 @@ class DiscriminatorMapHashesCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $io = new SymfonyStyle($input, $output);
         $strategy = $this->strategy;
 
         foreach ($this->registry->getManagers() as $em) {
@@ -64,11 +66,6 @@ class DiscriminatorMapHashesCommand extends Command
             }
         }
 
-        $table = $this->getHelper('table');
-
-        $table->setHeaders(['Klasse', 'Hash']);
-        $table->setRows($rows);
-
-        $table->render($output);
+        $io->table(['Klasse', 'Hash'], $rows);
     }
 }

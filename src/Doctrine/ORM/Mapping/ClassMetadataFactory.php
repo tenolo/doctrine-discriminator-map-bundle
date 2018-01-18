@@ -740,4 +740,22 @@ class ClassMetadataFactory extends AbstractClassMetadataFactory
 
         return $this->targetPlatform;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function isTransient($class)
+    {
+        if (!$this->initialized) {
+            $this->initialize();
+        }
+
+        $ref = new \ReflectionClass($class);
+        if ($ref->isInterface()) {
+            $metadata = $this->getMetadataFor($class);
+            $class = $metadata->getName();
+        }
+
+        return parent::isTransient($class);
+    }
 }

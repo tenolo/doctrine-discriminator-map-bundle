@@ -2,12 +2,8 @@
 
 namespace Tenolo\Bundle\DoctrineDiscriminatorMapBundle;
 
-use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
-use Mmoreram\SymfonyBundleDependencies\DependentBundleInterface;
-use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\DependencyInjection\Compiler\DiscriminatorNamingStrategyCompilerPass;
 
 /**
@@ -17,7 +13,7 @@ use Tenolo\Bundle\DoctrineDiscriminatorMapBundle\DependencyInjection\Compiler\Di
  * @author  Nikita Loges
  * @company tenolo GbR
  */
-class TenoloDoctrineDiscriminatorMapBundle extends Bundle implements DependentBundleInterface
+class TenoloDoctrineDiscriminatorMapBundle extends Bundle
 {
 
     /**
@@ -28,17 +24,6 @@ class TenoloDoctrineDiscriminatorMapBundle extends Bundle implements DependentBu
         parent::build($container);
 
         $container->addCompilerPass(new DiscriminatorNamingStrategyCompilerPass());
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function getBundleDependencies(KernelInterface $kernel)
-    {
-        return [
-            FrameworkBundle::class,
-            DoctrineBundle::class,
-        ];
     }
 
 }

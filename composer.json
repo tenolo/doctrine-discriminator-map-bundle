@@ -40,7 +40,7 @@
         "doctrine/doctrine-bundle": "~1.6",
 
         "mmoreram/symfony-bundle-dependencies": "~1.0",
-        "jbzoo/utils": "~1.7"
+        "jbzoo/utils": "~1.7|~2.2"
     },
     "repositories": [
         {
